@@ -34,6 +34,10 @@ public class Test01 {
 	@Autowired
 	private SqlSessionFactory ssf1;
 	
+	//尝试一下霸王硬上弓
+	@Autowired
+	private UserMapper userMapper;
+	
 	@Test
 	public  void main1() {
 		
@@ -50,6 +54,11 @@ public class Test01 {
 		UserMapper u1 = ssf1.openSession().getMapper(UserMapper.class);
 		userList = u1.query("kumanxuan");
 		System.out.println(userList);
+		
+		//Mapper真的可以很方便的啦!>
+		List<User> u2 = userMapper.query("tiramisu");
+		
+		System.out.println(u2);
 		
 	}
 

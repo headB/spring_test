@@ -28,13 +28,28 @@
 		<property name="dataSource" ref="dataSource" ></property>
 		<property name="typeAliasesPackage" value="spring_test.ssm.domain" ></property>
 		<!-- 注意这个地方,就是,开头不能是  /   ,然后就差不多了.! -->
-		<property name="mapperLocations" value="classpath:ssm/mapper/UserMapper.xml" ></property>
+		 <property name="mapperLocations" value="classpath:ssm/mapper/*Mapper.xml" ></property> 
 
 	</bean>
 
 	<!-- <bean id="Student" class="spring_test.Student" init-method="say" > 
 		<property name="name" value="kumanxuan"></property> <property name="person" 
 		ref="Person"></property> </bean> -->
+		
+		
+		<!-- 配置一下,批量导入Mapper,这样就可以直接查询数据了.! -->
+		
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="ssm.mapper"></property>
+	</bean> 
+	
+	<!-- 设置一个对比效果,就是,上面的是批量创建的Mapper,然后下面这个是 Mapper的单个创建 -->
+	
+	<!-- <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" >
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="mapperInterface" value="ssm.mapper.UserMapper"></property>
+	</bean> -->
+	
 
 	<!-- 这里还需要配置第三方,告诉一下需要开启注解 -->
 
