@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- <bean id="Person" class="spring_test.Person" > </bean> -->
+
+	<!-- 现在又有问题了,就是,如何添加数据库呢??按卓天杨龙说的步骤做吗?就是拿到SqlSessionFactory -->
+
+	<!-- 首先是加载db.properties的上下文进来. -->
+	<context:property-placeholder
+		location="classpath:db.properties" />
+		
+		<bean id="dataSource"  class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
+			<property name="driverClassName" value="${jdbc.driver}" ></property>
+			<property name="url" value="${jdbc.url}" ></property>
+			<property name="username" value="${jdbc.username}" ></property>
+			<property name="password" value="${jdbc.password}" ></property>
+		
+		</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	
+	<!--  这里就可以添加 mybatis-config.xml -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" ></property>
+		<property name="dataSource" ref="dataSource" ></property>
+		<property name="typeAliasesPackage" value="spring_test.ssm.domain" ></property>
+		<!-- 注意这个地方,就是,开头不能是  /   ,然后就差不多了.! -->
+		<property name="mapperLocations" value="classpath:ssm/mapper/UserMapper.xml" ></property>
+
+	</bean>
+
+	<!-- <bean id="Student" class="spring_test.Student" init-method="say" > 
+		<property name="name" value="kumanxuan"></property> <property name="person" 
+		ref="Person"></property> </bean> -->
+
+	<!-- 这里还需要配置第三方,告诉一下需要开启注解 -->
+
+	<context:component-scan
+		base-package="spring_test,cn._520su" />
+		
+		<context:annotation-config />
+
+
+</beans>
