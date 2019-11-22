@@ -10,6 +10,20 @@
   
   
   	
-  	<select id="query" resultType="User">select * from user where username = #{username}</select>
+  	<select id="query"  resultType="User">select * from user where username = #{username}</select>
+  	
+  	
+  	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id" >
+  		
+  		insert into user(password,username) values(#{password},#{username})
+  		
+  	</insert>
+  	
+  	<insert id="saveUser1" parameterType="spring_test.ssm.domain.User"  >
+  		
+  		insert into user(id,password,username) values(#{id},#{password},#{username})
+  		
+  	</insert>
+  	
   	
   </mapper>
